@@ -1,0 +1,22 @@
+题目描述：
+编写一个程序，找到两个单链表相交的起始节点。
+
+解题思路：
+将A链表的结尾指向B链表，将B链表的结尾指向A链表，分别从A、B的表头开始向后遍历
+相遇的节点就是交点。
+
+注意：链表是否相同判断的依据是链表的地址，而不是链表节点的值，在java中则是对于两个节点的对比。
+
+题目代码：
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA==null||headB==null) return null;
+        ListNode pa=headA,pb=headB;
+        while(pa!=pb)
+        {
+            pa=pa==null?headB:pa.next;
+            pb=pb==null?headA:pb.next;
+        }
+        return pa;
+    }
+}
