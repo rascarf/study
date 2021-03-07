@@ -1,0 +1,68 @@
+题目：两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位数字。
+
+请你将两个数相加，并以相同形式返回一个表示和的链表。
+
+你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
+分析：直接考虑加法器的概念，设置进位符，题目的关键点在于不一样长的链表相加，所以如果出现有一个链表为空但是另外一个还有的情况需要单独判断。
+注意：链表是反着存的！
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) 
+    {
+        ListNode* l=l1;
+       int c=0;
+       /*
+        输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
+        输出：7 -> 0 -> 8
+        原因：342 + 465 = 807
+        最后面是最高位
+       */
+       while(true)
+       {
+           l1->val+=c;
+           l1->val+=l2->val;
+           c=l1->val/10;
+           l1->val%=10;
+           //接下来处理特殊情况
+           if(l1->next==NULL)
+           {
+               l1->next=l2->next;
+               break;
+           }
+           if(l2->next==NULL)
+           {
+               break;
+           }
+           l1=l1->next;
+           l2=l2->next;
+       }
+       ListNode* l1n=l1->next;
+
+        if(l1n!=NULL)
+        {
+            while(c!=0)
+            {
+               
+                l1n->val+=c;
+                c=l1n->val/10;
+                l1n->val%=10;
+                 if(l1n->next==NULL&&c!=0)
+                {
+                    l1n->next=new ListNode(c);
+                    break;
+                }
+                l1n=l1n->next;
+            }
+        }
+        else if(l1n==NULL&&c!=0)
+        {
+            l1->next=new ListNode(c);
+        }
+        
+       return l;
+        
+        
+    }
+};
