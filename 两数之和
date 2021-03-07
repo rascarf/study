@@ -1,0 +1,38 @@
+题目：给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 的那 两个 整数，并返回它们的数组下标。
+
+思考：题目难点主要在于如何消除重复的问题，那么我们只需要进行排序，对于排序过后的数组进行匹配即可，数组匹配是O(n)的，所以最后取决于排序的复杂度
+
+技巧：
+sort(begin,end,sortfunc)
+//sortfunc是指函数名，将前面的begin和end的值进行何种排列
+//sortfunc是一个返回bool变量的函数
+//如果没有显式声明，那么就会从小到大
+
+代码：C++
+
+int main()
+{
+  vector <int> twosum{7,2,11,15};
+  sort(twosum.begin(), twosum.end());
+  vector<int>answer;
+  int target = 9;
+  for (int i = 0; i < twosum.size(); i++)
+  {
+    if (twosum[i] >= target)
+    {
+      break;
+    }
+    for (int j = i + 1; j < twosum.size(); j++)
+    {
+      if (twosum[i]+twosum[j]==target)
+      {
+        answer.push_back(i);
+        answer.push_back(j);
+      }
+    }
+  }
+  for (int i = 0; i < answer.size(); i++)
+  {
+    printf("%d ", answer[i]);
+  }
+}
