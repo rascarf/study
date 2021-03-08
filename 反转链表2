@@ -1,0 +1,55 @@
+题目：给定链表。 给定两个数字，m，n，反转从m到n个节点
+
+思考：和反转链表基本一个思路，只需要确定pre和last就好
+
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+
+        if(left==right) return head;
+        int oldleft=left;
+
+        ListNode a=head;
+        left--;
+
+        while(left>1)
+        {
+            a=a.next;
+            left--;
+        }
+        ListNode pre=a;
+
+        if(left==1) a=pre.next;
+        else a=pre;
+        
+        int length=right-oldleft+1;
+
+        ListNode b=a;
+
+        while(length>0)
+        {
+            b=b.next;
+            length--;
+        }      
+
+        if(left>0) 
+        {
+            pre.next=re(a,b);  
+            return head;
+        }
+        else
+        {
+            return re(a,b);
+        }
+
+    }
+    ListNode re(ListNode node,ListNode nextNode)
+    {
+        if(node.next==nextNode||node==nextNode) return node;
+        ListNode temp=re(node.next,nextNode);
+        
+        node.next.next=node;
+        node.next=nextNode;
+        return temp;  
+    }
+
+}
